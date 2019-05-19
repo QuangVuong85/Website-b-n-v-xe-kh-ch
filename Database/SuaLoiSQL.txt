@@ -1,0 +1,14 @@
+select request_session_id
+from sys.dm_tran_locks
+where resource_type = 'database' and
+      resource_database_id = 3 and
+      request_type = 'LOCK' and
+      request_status = 'GRANT';
+
+	  SET DEADLOCK_PRIORITY HIGH
+USE [master]
+ALTER DATABASE [model] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+USE model
+GO
+ALTER DATABASE model SET MULTI_USER WITH ROLLBACK IMMEDIATE
+go
